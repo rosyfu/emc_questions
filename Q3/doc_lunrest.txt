@@ -1,0 +1,93 @@
+#!flask/bin/python
+This program implement storage array simulator as a web service by python. it uses flask framework to implement REST API of lun management
+For lun, it has five attribution: id,name,initiator,target,size
+Here are the main function:
+    Authorization of lun management
+    List all luns belong to current user
+    List one lun by lun id
+    Create one or multiple luns
+    Modify lun size
+    Delete one lun by lun id
+    Retrieve lun size by lun name
+    Support concurrent request and data persistence
+For each fucntion, here is the detail message
+    Authorization:
+        It only implement one user and its username is admin and password is changeit. All lun management should has authorization information in URI
+        If the user information is invalid, it will return error message like Unauthorized access"
+    List all luns:
+        It lists all lun details. User can get the message by command like "curl -u admin:changeit -i http://localhost:5000/storage/api/v1.0/luns". And will get the detail message like:
+            {
+              "lun": [
+                {
+                  "initiator": "default", 
+                  "name": "rosytest", 
+                  "size": 4, 
+                  "target": "default", 
+                  "uri": "http://localhost:5000/storage/api/v1.0/luns/3"
+                }, 
+                {
+                  "initiator": "default", 
+                  "name": "rosytest2", 
+                  "size": 5, 
+                  "target": "default", 
+                  "uri": "http://localhost:5000/storage/api/v1.0/luns/4"
+                }
+              ]
+            }
+        If storage has no lun, it will return error message like "Not Found"
+    List one lun:
+        User can get lun detail message by lun id. For example, "curl -u admin:changeit -i http://localhost:5000/storage/api/v1.0/luns/2"
+        If the lun is not exist, it will return error message like "Bad Request" 
+    Create one or multiple luns:
+        User can create one or multiple luns by one uri. For example, "curl -u admin:changeit -i -H "Content-Type: application/json" -X POST -d '[{"name":"rosytest","size":4},{"name":"rosytest2","size":5}]' http://localhost:5000/storage/api/v1.0/luns"
+        And it return the command result like:
+        {
+          "lun": [
+            {
+              "initiator": "default", 
+              "name": "rosytest", 
+              "size": 4, 
+              "target": "default", 
+              "uri": "http://localhost:5000/storage/api/v1.0/luns/5"
+            }, 
+            {
+              "initiator": "default", 
+              "name": "rosytest2", 
+              "size": 5, 
+              "target": "default", 
+              "uri": "http://localhost:5000/storage/api/v1.0/luns/6"
+            }
+          ]
+        }
+
+    Modify lun information:
+        User can modify lun information like name, size, initiator, target. It check the type of all value.
+        For example: "curl -u admin:changeit -i -H "Content-Type: application/json" -X GET http://localhost:5000/storage/api/v1.0/luns/2"
+        And it return result like:
+        {
+          "lun": {
+            "initiator": "rosyig", 
+            "name": "backupnew", 
+            "size": 6, 
+            "target": "rosytg", 
+            "uri": "http://localhost:5000/storage/api/v1.0/luns/2"
+          }
+        }
+        if the value is invalid, it will return error message like "Bad Request"
+    Delete one lun:
+        User can delete lun by lun id.
+        For example:"curl -u admin:changeit -i -H "Content-Type: application/json" -X DELETE http://localhost:5000/storage/api/v1.0/luns/2"
+        And it return result like:
+        {
+             "Delete result": true
+        }
+        If the lun is not exist, it will return error message like "Bad Request" 
+    Retrieve lun size:
+        User can retrieve lun size by lun size. For example,"url -u admin:changeit -i http://localhost:5000/storage/api/v1.0/luns/retrieve/backup"
+        And it return result like:
+        {
+             "lun size": 6
+    
+        If the lun name is invalid, it will return error message like "Bad Request"
+    Support concurrent request and data persistence:
+        Lun management like creation,modify,deletion should support concurrent request and data persistence. This programe use lock to keep data persistence.

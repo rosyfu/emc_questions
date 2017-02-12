@@ -1,0 +1,60 @@
+Title : LUN-0001-Verify Lun Accessibility from Storage Page
+Test Objective : Verify Lun page is accessible and show correctly
+Test Procedure : Go to Lun page
+Expected Results : Verify that the Lun page and all LUNS show correctly
+
+Title : LUN-0002-Verify LUNS Creation
+Test Objectives : Verify user can create one or multiple LUNs succefully
+Test Procedure : Select one project, create LUNs, try different LUN name with right/wrong format, try valid/invalid format of LUN size, try more than one initiator group, try other attribution and check whether they are created succefully in the LUN page and Storage Console.
+Expected Results : if the format of LUN attributions are right, the creation will be done successfully and can be seen in the Storage Console, otherwise will fail.
+
+Title : LUN-0003-Verify LUNs Edition
+Test Objectives : Verify user can edit LUNs succefully
+Test Procedure : Select one LUN, edit it with valid attribution value and check it is consistent between lun page and Storage Console.
+				 Select one LUN, edit it with invalid attribution value.
+Expected Results : When editing the LUN with valid value, the lun edit successfully and consistent between lun page and Storage Console.
+				   When editing the LUN with invalid value, the lun will not be changed and user will get the proper error message.
+				 
+Title : LUN-0004-Verify LUNs Deletion
+Test Objectives : Verify user can delete LUNs succefully.
+Test Procedure : Select one LUN,delete it and check whether it is deleted successfully in the lun page and Storage Console.
+Expected Results : The deletion will be successfully if the attributions are properly. Otherwise, user will get the proper error message.
+
+Title : LUN-0005-Verify LUNs Export
+Test Objectives : Verify user can export LUNs succefully
+Test Procedure : Select one LUN, export it to a host and check whether it can be exported successfully and consistent between storage and host.
+				 Try export LUNs to valid/invalid host, try export LUNs to different host platform
+Expected Results : The export will be successfully if the attribution are properly. Otherwise, user will get the proper error message.	
+				   The LUN data in Storage and host is consistent.
+				   All tasks that export LUNs to valid host will be successfully and failed to invalid host.
+				   All tasks that export to supported host platform will be successfully.
+
+Title : LUN-0006-Verify LUN un-export
+Test Objectives : Verify user can un-export LUNs succefully
+Test Procedure : Select one exported LUN and un-exported it and check whether it can be un-export successfully and consitent between storage and host.
+Expected Results : The un-export will be successfully if the attribution are properly. Ohterwise user will get proper error message.
+				   The Lun data is consisten during LUN un-export .
+
+Title : LUN-0007-Verify Retrieve LUN Information
+Test Objectives : Verify user can retrieve LUN information succefully
+Test Procedure : Try to retrieve LUN by size and export anc check the result show correctly
+Expected Results : When retrieve LUN by size, the LUNs that match the size request will show correctly.
+				   When retrieve LUN by export information, the LUNs that match the export request will show correctly.
+
+Title : LUN-0008-Verify Concurrent Request is Supported
+Test Objectives : Verify storage support concurrent request.
+Test Procedure : Try to create multiple LUNs with same/different name at the same time.
+				 Try to edit the same LUN and commit it at the same time.
+				 Try to delete the smae LUN at the same time.
+				 Try to export/un-export same LUN at the same time.
+Expected Results : When create two LUNs with same name, one of task will be successfully and the other will failed.
+				   When create multiple LUNs with different name, all tasks will be successfully.
+				   When edit the same LUN, all tasks will be successfully and the result is consisten to one edition.
+				   When delete the smae LUN,one of task will be successfully and the others will failed. The failed task will get properly error message.
+				   When export same LUN,all tasks will be successfully.
+				   When un-export same LUN, one of task will be successfully and the others will failed. The faild task will get properly error message.
+
+Title : LUN-0009-Verify LUN management performance
+Test Objectives : Verify perfomance is not impacted no matter how many LUN are created and exported
+Test Procedure : Create a big project that has many LUNs and exported LUNs, and check the LUN creation/edition/deletion/export can run successfully and how much time consumed
+Expected Results :When storage has many LUNs, the LUN creation/edition/deletion/export can run successfully and the time consumed is accepted
